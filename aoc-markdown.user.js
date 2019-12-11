@@ -39,7 +39,7 @@
     turndownService.addRule('remove-dashes', {
       filter: 'h2',
       replacement: function (content) {
-        return '\n\n## ' + content.replace('--- ', '').replace(' ---', '') + '\n\n'
+        return '\n\n## ' + content.replace('\\--- ', '').replace(' ---', '') + '\n\n'
       }
     })
     var fullMarkdown = ''
