@@ -59,6 +59,13 @@
         return '[Image](' + url + ')'
       }
     })
+    // Correct em tags
+    turndownService.addRule('correct-em', {
+      filter: 'em',
+      replacement: function (content, n, o) {
+        return '*' + content + '*'
+      }
+    })
     var fullMarkdown = ''
     for (var elements of elementGroups) {
       for (var e of elements) {
