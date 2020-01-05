@@ -18,12 +18,24 @@
 
   // Run check at intervals
   setInterval(function () {
-    // Find button(s)
-    var buttons = document.getElementsByTagName('ytmusic-you-there-renderer')
-    for (var button of buttons) {
+    // Inital declarations
+    var buttons
+    var button
+
+    // Find button(s) for music.youtube.com
+    buttons = document.getElementsByTagName('ytmusic-you-there-renderer')
+    for (button of buttons) {
       // Click button
       button.querySelector('paper-button').click()
       console.log('Clicked Continue Watching button')
+    }
+    // Find button(s) for youtube.com
+    buttons = document.getElementsByTagName('yt-confirm-dialog-renderer')
+    for (button of buttons) {
+      // Check right button and click
+      if (button.querySelector('#scrollable').innerText === 'Video paused. Continue watching?') {
+        button.querySelector('#confirm-button').click()
+      }
     }
   }, 1000)
 })()
