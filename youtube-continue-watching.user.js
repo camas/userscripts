@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         youtube-continue-watching
 // @namespace    https://github.com/camas/userscripts/
-// @version      1.0.0
+// @version      1.0.1
 // @description  Auto-click "Continue Watching" whenever it pops up
 // @author       Camas
 // @homepage     https://github.com/camas/userscripts
