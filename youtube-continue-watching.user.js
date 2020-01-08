@@ -27,7 +27,6 @@
     for (button of buttons) {
       // Click button
       button.querySelector('paper-button').click()
-      console.log('Clicked Continue Watching button')
     }
     // Find button(s) for youtube.com
     buttons = document.getElementsByTagName('yt-confirm-dialog-renderer')
