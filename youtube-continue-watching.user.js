@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         youtube-continue-watching
 // @namespace    https://github.com/camas/userscripts/
-// @version      1.0.1
+// @version      1.0.2
 // @description  Auto-click "Continue Watching" whenever it pops up
 // @author       Camas
 // @homepage     https://github.com/camas/userscripts
@@ -15,6 +15,10 @@
 
 (function () {
   'use strict'
+  
+  isVisible = function( elem ) {
+    return !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );
+  };
 
   // Run check at intervals
   setInterval(function () {
@@ -25,6 +29,10 @@
     // Find button(s) for music.youtube.com
     buttons = document.getElementsByTagName('ytmusic-you-there-renderer')
     for (button of buttons) {
+      // Check visible
+      if (!isVisible(button)) {
+        continue;
+      }
       // Click button
       button.querySelector('paper-button').click()
     }
