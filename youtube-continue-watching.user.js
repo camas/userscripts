@@ -15,8 +15,8 @@
 
 (function () {
   'use strict'
-  
-  isVisible = function( elem ) {
+
+  function isVisible(elem) {
     return !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );
   };
 
