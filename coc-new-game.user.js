@@ -8,7 +8,7 @@
 // @homepageURL  https://github.com/camas/userscripts
 // @supportURL   https://github.com/camas/userscripts/issues
 // @license      MIT
-// @match        *://www.codingame.com/clashofcode/clash/report/*
+// @match        *://www.codingame.com/*
 // @icon         https://www.google.com/s2/favicons?domain=codingame.com
 // @grant        GM_setClipboard
 // @updateURL    https://github.com/camas/userscripts/raw/master/coc-new-game.user.js
@@ -17,15 +17,19 @@
 // ==/UserScript==
 
 (function () {
-    'use strict';
+    'use strict'
 
-    setTimeout(addLeaveButton, 500);
+    setInterval(addLeaveButton, 500)
 
     function addLeaveButton(eventArgs) {
+        // Check for right location
+        if (!document.location.pathname.startsWith("/clashofcode/clash/report")) {
+            return
+        }
+
         // Find Home button
         var homeNode = document.getElementsByClassName("leave-button")
-        if (homeNode.length == 0) {
-            setTimeout(addLeaveButton, 500);
+        if (homeNode.length != 1) {
             return
         }
         homeNode = homeNode[0]
@@ -37,7 +41,7 @@
         node.setAttribute('id', 'new-game-button')
 
         // Add click event
-        node.addEventListener('click', createNewGame, false);
+        node.addEventListener('click', createNewGame, false)
 
         // Add new button after home button
         homeNode.parentNode.parentNode.appendChild(node)
@@ -58,4 +62,4 @@
                 window.location = url
             })
     }
-})();
+})()
