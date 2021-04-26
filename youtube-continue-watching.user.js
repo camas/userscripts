@@ -14,35 +14,42 @@
 // ==/UserScript==
 
 (function () {
-  'use strict'
+  "use strict";
 
   function isVisible(elem) {
-    return !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );
-  };
+    return !!(
+      elem.offsetWidth ||
+      elem.offsetHeight ||
+      elem.getClientRects().length
+    );
+  }
 
   // Run check at intervals
   setInterval(function () {
     // Inital declarations
-    var buttons
-    var button
+    var buttons;
+    var button;
 
     // Find button(s) for music.youtube.com
-    buttons = document.getElementsByTagName('ytmusic-you-there-renderer')
+    buttons = document.getElementsByTagName("ytmusic-you-there-renderer");
     for (button of buttons) {
       // Check visible
       if (!isVisible(button)) {
         continue;
       }
       // Click button
-      button.querySelector('paper-button').click()
+      button.querySelector("paper-button").click();
     }
     // Find button(s) for youtube.com
-    buttons = document.getElementsByTagName('yt-confirm-dialog-renderer')
+    buttons = document.getElementsByTagName("yt-confirm-dialog-renderer");
     for (button of buttons) {
       // Check right button and click
-      if (button.querySelector('#scrollable').innerText === 'Video paused. Continue watching?') {
-        button.querySelector('#confirm-button').click()
+      if (
+        button.querySelector("#scrollable").innerText ===
+        "Video paused. Continue watching?"
+      ) {
+        button.querySelector("#confirm-button").click();
       }
     }
-  }, 1000)
-})()
+  }, 1000);
+})();

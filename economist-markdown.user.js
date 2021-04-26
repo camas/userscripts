@@ -17,66 +17,68 @@
 // ==/UserScript==
 
 (function () {
-  'use strict'
+  "use strict";
 
   // Add button
-  var node = document.createElement('div')
-  node.innerHTML = 'Copy as markdown<div></div>'
-  node.setAttribute('id', 'copyButton')
-  document.body.appendChild(node)
+  var node = document.createElement("div");
+  node.innerHTML = "Copy as markdown<div></div>";
+  node.setAttribute("id", "copyButton");
+  document.body.appendChild(node);
 
   // Add function to button
-  document.getElementById('copyButton').addEventListener('click', CopyAsMarkdown, false)
+  document
+    .getElementById("copyButton")
+    .addEventListener("click", CopyAsMarkdown, false);
 
-  function CopyAsMarkdown (eventArgs) {
+  function CopyAsMarkdown(eventArgs) {
     // Get all description elements
     var elementGroups = [
-      document.getElementsByClassName('layout-article-header'),
-      document.getElementsByClassName('layout-article-body')
-    ]
+      document.getElementsByClassName("layout-article-header"),
+      document.getElementsByClassName("layout-article-body"),
+    ];
 
     // Use Turndown to convert elements to markup
-    var turndownService = new TurndownService({ emDelimiter: '__' })
+    var turndownService = new TurndownService({ emDelimiter: "__" });
     // Make urls absolute
-    turndownService.addRule('full-urls', {
-      filter: 'a',
+    turndownService.addRule("full-urls", {
+      filter: "a",
       replacement: function (content, n, o) {
-        var url = n.getAttribute('href')
-        if (!url.startsWith('http')) {
-          url = 'https://economist.com' + url
+        var url = n.getAttribute("href");
+        if (!url.startsWith("http")) {
+          url = "https://economist.com" + url;
         }
-        return '[' + content + '](' + url + ')'
-      }
-    })
+        return "[" + content + "](" + url + ")";
+      },
+    });
     // Make images urls for use with reddit
-    turndownService.addRule('img-urls', {
-      filter: 'img',
+    turndownService.addRule("img-urls", {
+      filter: "img",
       replacement: function (content, n, o) {
-        var url = n.getAttribute('src')
-        if (!url.startsWith('http')) {
-          url = 'https://economist.com' + url
+        var url = n.getAttribute("src");
+        if (!url.startsWith("http")) {
+          url = "https://economist.com" + url;
         }
-        return '[Image](' + url + ')'
-      }
-    })
+        return "[Image](" + url + ")";
+      },
+    });
     // Correct em tags
-    turndownService.addRule('correct-em', {
-      filter: 'em',
+    turndownService.addRule("correct-em", {
+      filter: "em",
       replacement: function (content, n, o) {
-        return '*' + content + '*'
-      }
-    })
-    var fullMarkdown = ''
+        return "*" + content + "*";
+      },
+    });
+    var fullMarkdown = "";
     for (var elements of elementGroups) {
       for (var e of elements) {
-        var markdown = turndownService.turndown(e)
-        fullMarkdown += markdown
-        fullMarkdown += '\n\n'
+        var markdown = turndownService.turndown(e);
+        fullMarkdown += markdown;
+        fullMarkdown += "\n\n";
       }
     }
-    fullMarkdown = fullMarkdown.slice(0, -1)
-    GM_setClipboard(fullMarkdown)
-    document.getElementById('copyButton').innerHTML = 'Done<div></div>'
+    fullMarkdown = fullMarkdown.slice(0, -1);
+    GM_setClipboard(fullMarkdown);
+    document.getElementById("copyButton").innerHTML = "Done<div></div>";
   }
 
   // Style button
@@ -121,5 +123,5 @@
 #copyButton > .ld {
     font-size: initial
 }
-`)
-})()
+`);
+})();

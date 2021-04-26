@@ -18,39 +18,43 @@
 // ==/UserScript==
 
 (function () {
-  'use strict'
+  "use strict";
 
   // Add button
-  var node = document.createElement('div')
-  node.innerHTML = 'Copy as markdown<div></div>'
-  node.setAttribute('id', 'copyButton')
-  document.body.appendChild(node)
+  var node = document.createElement("div");
+  node.innerHTML = "Copy as markdown<div></div>";
+  node.setAttribute("id", "copyButton");
+  document.body.appendChild(node);
 
   // Add function to button
-  document.getElementById('copyButton').addEventListener('click', CopyAsMarkdown, false)
+  document
+    .getElementById("copyButton")
+    .addEventListener("click", CopyAsMarkdown, false);
 
-  function CopyAsMarkdown (eventArgs) {
+  function CopyAsMarkdown(eventArgs) {
     // Get all description elements
-    var elements = document.getElementsByClassName('day-desc')
+    var elements = document.getElementsByClassName("day-desc");
 
     // Use Turndown to convert elements to markup
-    var turndownService = new TurndownService({ emDelimiter: '__' })
+    var turndownService = new TurndownService({ emDelimiter: "__" });
     // Remove dashes from headers
-    turndownService.addRule('remove-dashes', {
-      filter: 'h2',
+    turndownService.addRule("remove-dashes", {
+      filter: "h2",
       replacement: function (content) {
-        return '\n\n## ' + content.replace('\\--- ', '').replace(' ---', '') + '\n\n'
-      }
-    })
-    var fullMarkdown = ''
+        return (
+          "\n\n## " + content.replace("\\--- ", "").replace(" ---", "") + "\n\n"
+        );
+      },
+    });
+    var fullMarkdown = "";
     for (var e of elements) {
-      var markdown = turndownService.turndown(e)
-      fullMarkdown += markdown
-      fullMarkdown += '\n\n'
+      var markdown = turndownService.turndown(e);
+      fullMarkdown += markdown;
+      fullMarkdown += "\n\n";
     }
-    fullMarkdown = fullMarkdown.slice(0, -1)
-    GM_setClipboard(fullMarkdown)
-    document.getElementById('copyButton').innerHTML = 'Done<div></div>'
+    fullMarkdown = fullMarkdown.slice(0, -1);
+    GM_setClipboard(fullMarkdown);
+    document.getElementById("copyButton").innerHTML = "Done<div></div>";
   }
 
   // Style button
@@ -95,5 +99,5 @@
 #copyButton > .ld {
     font-size: initial
 }
-`)
-})()
+`);
+})();

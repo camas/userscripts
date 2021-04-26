@@ -17,49 +17,56 @@
 // ==/UserScript==
 
 (function () {
-    'use strict'
+  "use strict";
 
-    setInterval(addLeaveButton, 500)
+  setInterval(addLeaveButton, 500);
 
-    function addLeaveButton(eventArgs) {
-        // Check for right location
-        if (!document.location.pathname.startsWith("/clashofcode/clash/report")) {
-            return
-        }
-
-        // Find Home button
-        var homeNode = document.getElementsByClassName("leave-button")
-        if (homeNode.length != 1) {
-            return
-        }
-        homeNode = homeNode[0]
-
-        // Create button
-        var node = document.createElement('button')
-        node.innerHTML = 'Create New Game'
-        node.setAttribute('class', 'leave-button')
-        node.setAttribute('id', 'new-game-button')
-
-        // Add click event
-        node.addEventListener('click', createNewGame, false)
-
-        // Add new button after home button
-        homeNode.parentNode.parentNode.appendChild(node)
+  function addLeaveButton(eventArgs) {
+    // Check for right location
+    if (!document.location.pathname.startsWith("/clashofcode/clash/report")) {
+      return;
     }
 
-    function createNewGame(eventArgs) {
-        // Send request
-        var data = [unsafeWindow.session.codinGamer.userId, { "SHORT": true }, [], ["FASTEST", "SHORTEST", "REVERSE"]]
-        fetch("/services/ClashOfCode/createPrivateClash", {
-            method: "POST",
-            body: JSON.stringify(data)
-        })
-            .then(resp => resp.json())
-            .then(data => {
-                document.getElementById('new-game-button').innerHTML = 'Done. Set clipboard'
-                var url = "https://www.codingame.com/clashofcode/clash/" + data.publicHandle
-                GM_setClipboard(url)
-                window.location = url
-            })
+    // Find Home button
+    var homeNode = document.getElementsByClassName("leave-button");
+    if (homeNode.length != 1) {
+      return;
     }
-})()
+    homeNode = homeNode[0];
+
+    // Create button
+    var node = document.createElement("button");
+    node.innerHTML = "Create New Game";
+    node.setAttribute("class", "leave-button");
+    node.setAttribute("id", "new-game-button");
+
+    // Add click event
+    node.addEventListener("click", createNewGame, false);
+
+    // Add new button after home button
+    homeNode.parentNode.parentNode.appendChild(node);
+  }
+
+  function createNewGame(eventArgs) {
+    // Send request
+    var data = [
+      unsafeWindow.session.codinGamer.userId,
+      { SHORT: true },
+      [],
+      ["FASTEST", "SHORTEST", "REVERSE"],
+    ];
+    fetch("/services/ClashOfCode/createPrivateClash", {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        document.getElementById("new-game-button").innerHTML =
+          "Done. Set clipboard";
+        var url =
+          "https://www.codingame.com/clashofcode/clash/" + data.publicHandle;
+        GM_setClipboard(url);
+        window.location = url;
+      });
+  }
+})();
