@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         youtube-continue-watching
 // @namespace    https://github.com/camas/userscripts/
-// @version      1.0.3
+// @version      1.0.4
 // @description  Auto-click "Continue Watching" whenever it pops up
 // @author       Camas
 // @homepage     https://github.com/camas/userscripts
@@ -38,7 +38,7 @@
         continue;
       }
       // Click button
-      button.querySelector("paper-button").click();
+      button.querySelector("tp-yt-paper-button").click();
     }
     // Find button(s) for youtube.com
     buttons = document.getElementsByTagName("yt-confirm-dialog-renderer");
